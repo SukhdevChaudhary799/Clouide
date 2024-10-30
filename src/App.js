@@ -1,23 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Editor from './components/Editor/Editor';
+import OutputPanel from './components/OutputPanel/OutputPanel';
+import FileExplorer from './components/FileExplorer/FileExplorer';
+import RunButton from './components/Runbutton/RunButton';
+import './styles/App.css';
 
 function App() {
+  const [code, setCode] = useState('// Write your code here...');
+  const [output, setOutput] = useState('');
+
+  // Function to handle code run
+  const runCode = async () => {
+    try {
+      const response = await fetch('/api/run', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code }),
+      });
+      const result = await response.json();
+      setOutput(result.output);
+    } catch (error) {
+      setOutput('Error running code.');
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="cloud-ide-container">
+      <FileExplorer />
+      <div className="main-content">
+        <Editor code={code} setCode={setCode} />
+        <RunButton runCode={runCode} />
+        <OutputPanel output={output} />
+      </div>
     </div>
   );
 }

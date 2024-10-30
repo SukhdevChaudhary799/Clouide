@@ -1,0 +1,32 @@
+.cloud-ide-container {
+  display: flex;
+  height: 100vh;
+}
+
+.file-explorer {
+  width: 20%;
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.main-content {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.editor {
+  flex-grow: 1;
+  margin-bottom: 10px;
+}
+
+.output-panel {
+  background-color: #282c34;
+  color: #61dafb;
+  padding: 10px;
+  height: 150px;
+  overflow-y: auto;
+  border-top: 1px solid #333;
+}
